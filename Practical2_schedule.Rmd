@@ -93,18 +93,20 @@ All linear models have a continuous response variable. By "continuous" the respo
 # Linear models with continuous explanatory variables: Regression
 Linear models with continuous explanatory variables are often called "regression analyses". If you have two or more continuous explanatory variables you may see them called "multiple regression".
 
-## Download data and calculate simple statistics
+## Before you begin
 We will start by looking at the `caterpillars` data set that we were using in the interactive website for linear models with continuous explanatory variables. The `caterpillars.csv` data file is available on Canvas and should be downloaded. Remember that this will end up in your "Downloads" folder: you will need to move it from Downloads into your NES2303 folder before you can read it into R. After you have downloaded the file:
 
-* Open up the `caterpillars.csv` file in Microsoft Excel to have a quick look at it, but ignore any requests to save it in Excel format.
-* Start RStudio. Select **File -> Recent projects -> NES2303** to open up the RStudio project you created in the first practical session.
-* Create a new R script: in RStudio select **File -> New File -> R Script**. It is good practice to save your script immediately by going to **File -> Save** and give it a sensible name, e.g. `Practical2.R`.
+1. Download the `caterpillars.csv` from Canvas; you can open the file in Microsoft Excel to have a quick look at it, but ignore any requests to save it in Excel format.
+2. Use File Explorer to copy `caterpillars.csv` from your Downloads folder to your NES2303 folder
+3. Start RStudio. Select **File -> Recent projects -> NES2303** to open up the RStudio project you created in the first practical session. Check that `NES2303` is showing in the top right corner of the RStudio window.
 
-Now start writing the contents of your script, with a title line, explanation of what your script is doing, etc. **Note**: some of you are storing all your CSV files in a `Data` subfolder, others are storing them in the main `NES2303` folder. It does not matter which one you choose, but adjust the `read.csv()` call below accordingly:
 
-**Note**: Write a suitable comment after a `#` symbol at the top of your script to explain what it is going to do. I would recommend putting "section numbers" that match those in this schedule to help you navigate your code. If you add `####` at the end of a comment you can add it to your Table of Contents (ask if unsure).
+## Create a new R script and import the data
+You now want to import the data, and check the first few rows to ensure it's been read into RStudio correctly, and has the right number of rows and columns. In the example below note the use of comments, preceded by `#` symbols, and the use of blank lines. Four comments `####` auto-creates a table of contents (ToC) for your script (**ask a demonstrator if unsure how to open the ToC**),
 
-We need to load the data into R and store it in an object so we can access it easily.
+1. In RStudio select **File -> New File -> R Script**. It is good practice to save your script immediately by going to **File -> Save** and give it a sensible name, e.g. `Practical2.R`.
+2. Now start writing the contents of your script, with a title line, explanation of what your script is doing, etc. **Note**: some of you are storing all your CSV files in a `Data` subfolder, others are storing them in the main `NES2303` folder. It does not matter which one you choose, but adjust the `read.csv()` call below accordingly:
+
 
 ```{r}
 # Practical 2. Examples of linear models for continuous and categorical data ####
