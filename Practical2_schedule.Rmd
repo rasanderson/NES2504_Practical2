@@ -81,7 +81,7 @@ Commonly used names in textbooks for linear models like this differ depending on
 
 # Aims and objectives
 The overall aim of this practical are to show you how to use the `lm()` function, using datasets that you should already have seen on the interactive websites at 
-[linear models with continuous explanatories](https://naturalandenvironmentalscience.shinyapps.io/linear_explan/) and  [linear models with categorical explanatories](https://naturalandenvironmentalscience.shinyapps.io/categorical_explan/). Please work through these websites **before** attempting this practical. You will also have the opportunity to gain confidence using linear models with a new dataset. **Specific objectives** are to:
+[linear models with continuous explanatories (right-click and open in a new tab)](https://naturalandenvironmentalscience.shinyapps.io/linear_explan/) and  [linear models with categorical explanatories (right-click and open in a new tab)](https://naturalandenvironmentalscience.shinyapps.io/categorical_explan/). Please work through these websites **before** attempting this practical. You will also have the opportunity to gain confidence using linear models with a new dataset. **Specific objectives** are to:
 
 1. understand how to interpret results from linear models with **continuous explanatory variables**
 2. learn the use of linear models with **categorical explanatory variables**, and explore multiple comparison tests, to compare different treatment levels
