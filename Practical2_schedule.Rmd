@@ -68,13 +68,13 @@ So far your goals have been simple summary statistics (mean, median, standard de
 &nbsp;
 
 <center>
-<h2><strong><span class="boxed">linear model</span> ( <span class="boxed">y</span> ~ <span class="boxed">x</span> , data = <span class="boxed">mydata</span>, ... )</strong> 
+<h2><strong><span class="boxed">lm</span> ( <span class="boxed">y</span> ~ <span class="boxed">x</span> , data = <span class="boxed">mydata</span>, ... )</strong> 
 </h2></center>
 
 &nbsp;
 
 **Important**
-Commonly used names for linear models like this differ depending on the explanatory variable:
+Commonly used names in textbooks for linear models like this differ depending on the explanatory variable. We make life easier by using the `lm()` function for both types of analysis:
 
 * **Regression** - when you have one or more continuous explanatory variables
 * **Analysis of Variance (ANOVA)** - when you have one or more categorical explanatory variables
@@ -93,13 +93,13 @@ Inherent in the idea of linear models is the idea of cause and effect, i.e. your
 |:---------:|:-----------:|:----------------:|
 | Plant pathogen gene regulation | Fungicide concentration (mg/l) | Continuous |
 | Mean bird population size | Habitat type (Garden, Arable, Woodland, Heath) | Categorical |
-| Pollinator diversity | Wildflower diversity | Continuous |
+| Benthic invertebrate diversity | Depth to sea floor | Continuous |
 
 All linear models have a continuous response variable. By "continuous" the response can be any number (3.4, 1.9, -3 etc., rather than Yes/No, Dead/Alive, or only whole numbers permitted). In the above 3 examples note the following:
 
 * the gene regulation has a continuous explanatory fungicide concentration
 * the average bird population at a site across all surveys has a categorical explanatory habitat type, **with four 'levels'** for the 4 different habitats
-* Pollinator diversity and wildflower diversity are both continuous. I think it is reasonable to assume that the biodiversity of wildflowers will have a big effect on the pollinators out there, so I've listed wildflower diversity as the explanatory variable. However, some scientists have shown that if the pollinator biodiversity declines sharply, this has a negative effect on the biodiversity of some wildflowers. So in this example the response and explanatory terms are a little more ambiguous.
+* Pollinator diversity and benthic invertebrate diversity are both continuous. It is reasonable to assume that the biodiversity of wildflowers will have a big effect on the pollinators out there, so wildflower diversity is shown as the explanatory variable. However, some scientists have shown that if the pollinator biodiversity declines sharply, this has a negative effect on the biodiversity of some wildflowers. So in this example the response and explanatory terms are a little more ambiguous.
 
 # Linear models with continuous explanatory variables: Regression
 Linear models with continuous explanatory variables are often called "regression analyses". If you have two or more continuous explanatory variables you may see them called "multiple regression".
@@ -109,7 +109,7 @@ We will start by looking at the `caterpillars` data set that we were using in th
 
 1. Download the `caterpillars.csv` from Canvas; you can open the file in Microsoft Excel to have a quick look at it, but ignore any requests to save it in Excel format.
 2. Use File Explorer to copy `caterpillars.csv` from your Downloads folder to your NES2504 folder
-3. Start RStudio. Select **File -> Open project...** and navigate to the RStudio project you created in the first practical session. This should be a file called NES2504; open it and check that `NES2504` is showing in the top right corner of the RStudio window.
+3. Start RStudio. Select **File -> Open project...** and navigate to the RStudio project you created in the first practical session. This should be a file called NES2504; open it and when RStudio starts **check that `NES2504` is showing in the top right** corner of the RStudio window. This is **ESSENTIAL!** If you are unsure if you have opened your NES2504 project you **must** check with a demonstrator before proceding.
 
 
 ## Create a new R script and import the data
@@ -152,15 +152,37 @@ dim(caterpillar_dat)
 We can see that this data set contains 2 continuous variables; growth (mg/day) and tannin (mg). What is the mean, minimum, maximum value of these two variables (look back to Practical 1 if you have forgotten how to obtain these data).
 
 ## Simple visualisation of caterpillar data
-It is essential to plot your data, to gain an understanding of its characteristics, before running a linear model. As you have two fairly simple variables, a scatter plot with our explanatory variable of tannin on the x axis and growth on the y axis is required. Before proceeding, do the following:
+It is essential to plot your data, to gain an understanding of its characteristics, before running a linear model. As you have two fairly simple variables, a scatter plot, also known as a **"point plot"**, with our explanatory variable of tannin on the x axis and growth on the y axis is required.  So thinking about our "goals" here:
 
-* Before typing the code, leave a blank line, then a line that says `# 3.2 Plot caterpillar data ####`
+&nbsp;
+
+<center>
+<h2><strong><span class="boxed">scatterplot</span> ( <span class="boxed">y</span> ~ <span class="boxed">x</span> , data = <span class="boxed">mydata</span>)</strong> 
+</h2></center>
+
+&nbsp;
+
+which for your caterpillar data can be considered as:
+
+&nbsp;
+
+<center>
+<h2><strong><span class="boxed">gf_point</span> ( <span class="boxed">growth</span> ~ <span class="boxed">tannin</span> , data = <span class="boxed">caterpillar_dat</span>)</strong> 
+</h2></center>
+
+&nbsp;
+
+
+We now need to translate this goal into R via the following steps:
+
+* In the RStudio code editor (top left of RStudio), at the bottom of your `Practical1.R` **enter a blank line**, then a line that says `# 3.2 Plot caterpillar data ####`. This makes your code easier to read and helps you navigate with a table of contents.
 * Use the `gf_point()` function to create your scatterplot with `tannin` on the x-axis (explanatory) and `growth` on the y-axis (response)
-* Add a second row to your R code with command `gf_labs()` to label the x- and y-axes as shown below. Us `%>%` at the end of the preceding line so that the gf_labs() command is actioned
+* Add a second row to your R code with command `gf_labs()` to label the x- and y-axes as shown below. Us `%>%` at the end of the preceding line so that the gf_labs() command is actioned. Remember that `%>%` indicates to R to continue adding features to your plot
 * Add a third row to your R code to change the theme from the nasty grey background etc. using `gf_theme()`, remembering to add `%>%` to the end of the second row.
 * Your graph should appear as shown below. Check with a demonstrator to ensure you have done it correctly. Look at your script from _Practical 1 Data visualisation_ for futher reminders:
 
-```{r echo = FALSE}
+```{r echo = TRUE}
+# 3.22 Plot caterpillar data ####
 gf_point(growth~tannin, data = caterpillar_dat) %>% 
   gf_labs(x = "Dietary tannin (mg)", y = "Caterpillar growth rate (mg/day)") %>% 
   gf_theme(theme_classic())
@@ -185,9 +207,16 @@ Now create a linear model (regression) to see if our expectations were correct. 
 
 &nbsp;
 
-The syntax with the `lm()` function is the same:
+The syntax with the `lm()` function is the same, as the `lm()` function is flexible and can be used for regression analysis:
 
-`lm(response_variable ~ continuous_explanatory_variable, data = dataframe_name)`
+&nbsp;
+
+<center>
+<h2><strong><span class="boxed">lm</span> ( <span class="boxed">growth</span> ~ <span class="boxed">tannin</span> , data = <span class="boxed">caterpillar_dat</span>)</strong> 
+</h2></center>
+
+&nbsp;
+
 
 Using this template, it is easy to create a linear model for the relationship between tannin and caterpillar growth using the `lm()` function, storing the output of the linear model in an R object called `growth_lm`:
 
@@ -221,16 +250,23 @@ Now some answers (please think about the above questions before reading these!!)
 
  + The column headed 'Estimate' gives the estimated value of your intercept and slope. So your intercept is `11.988` which you were probably able to "guesstimate" by eye from the scatterplot as being around 12.0
  + The slope is harder to guesstimate, and is `-1.259`. Notice that it is **negative** because the scatter of points **declines** from left to right on your graph
- + You may know that R-squared ($R^2$) is the proportion of variation explained by your linear model. What is a little confusing is that two $R^2$ values are given, one called `Multiple` and the other `Adujusted`. Always refer to the `Adjusted R-squared` which is `0.815` i.e. over 80% of the variation in caterpillar growth rate can be explained by tannin
+ + You may know that R-squared ($R^2$) is the proportion of variation explained by your linear model. What is a little confusing is that two $R^2$ values are given, one called `Multiple` and the other `Adujusted`. Always refer to the `Adjusted R-squared` which is `0.815` i.e. 81.5% of the variation in caterpillar growth rate can be explained by tannin
  + You can enter the `sqrt()` function directly in the Console. Again, used the adjusted $R^2$ which should give you a correlation coefficient of `0.903`. There is also a separate `cor()` function to calculate the correlation between any two variables should you need it.
- + Overall model significance is shown by the F-statistic. The higher the F-statistic, the greater the "significance" of the model, which is reflected by a **lower** p-value. You would write something like "Overall there was a significant negative relationship between caterpillar growth and tannin ($F_{1,48}$=216.9,p<0.001)". **Note**: by convention you provide the **degrees of freedom as subscripts** when reporting F-values, and **3 decimal places** when reporting p-values.
+ + Overall model significance is shown by the F-statistic. The higher the F-statistic, the greater the "significance" of the model, which is reflected by a **lower** p-value. You would write something like:
+ 
+ "Overall there was a significant negative relationship between caterpillar growth and tannin ($F_{1,48}$=216.9,p<0.001)".
+ 
+**Note**: by convention you provide the **degrees of freedom as subscripts** when reporting F-values, and **3 decimal places** when reporting p-values.
+
   + The p-value for tannin is given as `<2e-16`. This "exponential" format is a short-hand method of referring to very small numbers, using `e-` or very big numbers, using `e+`. So here we have a very small number, with sixteen zeros, i.e. `0.0000000000000002`. To three decimal places, this is zero, but in reality you **never have a p-value of zero**, there will always be a positive value. So by convention, to three decimal places you would report this as `p<0.001` which can be interpreted as "p is less than 0.001". This is highly significant.
   
 ### Interactive demonstration of SS, slopes, intercepts
-You may find it useful to look at this [Interactive demonstration](https://naturalandenvironmentalscience.shinyapps.io/how_anova_works/#section-variances-with-continuous-explanatory-variables) of the tannin and caterpillar growth data, where you can see the sums of squares, and the effects of changing the amount of "noise" in your data.
+You may find it useful to look at this <a href="https://naturalandenvironmentalscience.shinyapps.io/how_anova_works/#section-variances-with-continuous-explanatory-variables" target="_blank">Interactive demonstration</a> of the tannin and caterpillar growth data. It first shows you how sums of squares (SS) are calculated, then (scroll down) you can tweak the "noise" in the data to see what happens.
 
 ### A note on t-statistics
-You will see in the above summary table a column headed `t value`. A brief description of the rather strange t-distribution can be found on the first few pages of [this interactive website that includes t statistics](https://naturalandenvironmentalscience.shinyapps.io/Other_tests/) . The t-distribution is like a fat-tailed normal distribution, and of particular value is the one-sample t-test. This checks whether an estimated value, here your Intercept and slope, is different to zero. If the p-value is **low** then there is a **high probability** that your estimate is **not** zero.
+You will see in the above summary table a column headed `t value`. A brief description of the rather strange t-distribution can be found on the first few pages of this interactive website that includes
+<a href="https://naturalandenvironmentalscience.shinyapps.io/Other_tests/#section-t-distribution" target="_blank">t-statistics</a>
+. The t-distribution is like a fat-tailed normal distribution, and of particular value is the one-sample t-test. This checks whether an estimated value, here your Intercept and slope, is different to zero. If the p-value is **low** then there is a **high probability** that your estimate is **not** zero.
 
 ### How to write up the linear model in a report
 Unfortunately R is the same as most statistics packages, in that the way it reports data analyses is messy, and is not how you would present it in a report. The linear model you have just created is often called a **regression** because the explanatory variable (only one explanatory, `tannin` in this example) is continuous, not categorical. Which **two** of the following is the **correct** way of writing the analysis in a report and **why**? Check your answer with a demonstrator **before** continuing:
@@ -310,7 +346,9 @@ Is the value that you obtained from your `predictor` function the same as when y
 
 ## Checking the assumptions of the linear model
 ### Revision: what are linear model residuals and why do they matter?
-All models are simplifications of reality, and thus make various assumptions about your data. You will remember from the online interactive website tutorials [Checking model assumptions](https://naturalandenvironmentalscience.shinyapps.io/NES2504_regression/#section-checking-model-assumptions) that one of the key assumptions of linear models is that the residuals are from a normal distribution. Residuals are the "noise" in your data. In a 'perfect' set of data all your observations would fall exactly on the fitted line. But look at the graph with your fitted line: only one observation (tannin concentration 7.0) lies very close to the fitted line. The others are all slightly above or below the line. A normal distribution is a bell-shaped curve, so if the model is a good one, if you create a frequency histogram of the residuals you should see (roughly) that sort of curve. **Note**: "residuals" are sometimes referred to as "errors" and represented by the Greek letter Epsilon ($\epsilon$).
+All models are simplifications of reality, and thus make various assumptions about your data. You will remember from the online interactive website tutorials
+<a href="https://naturalandenvironmentalscience.shinyapps.io/NES2303_regression/#section-checking-model-assumptions" target="_blank">Checking model assumptions</a>
+ that one of the key assumptions of linear models is that the residuals are from a normal distribution. Residuals are the "noise" in your data. In a 'perfect' set of data all your observations would fall exactly on the fitted line. But look at the graph with your fitted line: only one observation (tannin concentration 7.0) lies very close to the fitted line. The others are all slightly above or below the line. A normal distribution is a bell-shaped curve, so if the model is a good one, if you create a frequency histogram of the residuals you should see (roughly) that sort of curve. **Note**: "residuals" are sometimes referred to as "errors" and represented by the Greek letter Epsilon ($\epsilon$).
 
 **Key point**: The residuals above and below the line should average around zero, and their frequency histogram produce a rough bell-shaped curve.
 
@@ -329,7 +367,7 @@ gf_histogram(~growth_resids)
 
 With 50 observations your frequency histogram of the residuals looks roughly bell-shaped, but with smaller sample sizes we need a better method to determine if they are normally distributed. Two good things to check are a) that the residuals are similar in spread for low and high tannin levels (x-axis predictor), and b) use a QQ plot (quantile-quantile plot) of your residuals. The latter ranks your residuals from lowest to highest, and compares them with what would have been expected if your residuals are from a normal distribution.
 
-Both these "diagnostic" plots can be created directly from your model output. R actually produces four diagnostic plots, but we are only interested in the first two, using the `which = c(1,2)` option:
+Both these "diagnostic" plots can be created directly from your model output. R actually produces four diagnostic plots, but we are only interested in the first two, using the `which = c(1,2)` option. **Note:** After the first plot has displayed you will have to hit the **Enter** key in the RStudio Console (bottom left) to display the second plot:
 
 ```{r}
 plot(growth_lm, which=c(1,2))
@@ -469,7 +507,7 @@ anova(soil_lm)
 Anova(soil_lm)
 ```
 
-You might be wondering how we can test the effect of an explanatory variable using variances. In this course you will mainly use the "simplified" display of an ANOVA table, using the `Anova()` function from the `car` package. This is more robust to missing data values and its output generally easier to interpret. Here, we also look at the traditional "full" output from an ANOVA table, using the `anova()` function from "basic" R. It includes a column headed "Mean Sq". These are "Mean Sums of Squares" which is another name for "variance". The F-value is calculated by dividing the variance for soil, but the unknown Residual variance. **Think of the F-value as the signal:noise ratio**. The bigger the F-value, the more important is soil. See my Ten-Minute Video and play with an interactive that allows you to adjust the number of replicates and how noisy your data are, go to this [Interactive demo of crop yield data](https://naturalandenvironmentalscience.shinyapps.io/how_anova_works/#section-variances-with-categorical-explanatory-variables).
+You might be wondering how we can test the effect of an explanatory variable using variances. In this course you will mainly use the "simplified" display of an ANOVA table, using the `Anova()` function from the `car` package. This is more robust to missing data values and its output generally easier to interpret. Here, we also look at the traditional "full" output from an ANOVA table, using the `anova()` function from "basic" R. It includes a column headed "Mean Sq". These are "Mean Sums of Squares" which is another name for "variance". The F-value is calculated by dividing the variance for soil, but the unknown Residual variance. **Think of the F-value as the signal:noise ratio**. The bigger the F-value, the more important is soil. See my Ten-Minute Video and play with an interactive that allows you to adjust the number of replicates and how noisy your data are, go to this <a href="https://naturalandenvironmentalscience.shinyapps.io/how_anova_works/#section-variances-with-categorical-explanatory-variables" target="_blank">Interactive demo of crop yield data (scroll down to see both demos)</a>
 
 You can see that the F-value is 4.2447 and the p-value is 0.02495. Which of the following best describes the results of the linear model? 
 
@@ -520,7 +558,9 @@ TukeyHSD(soil_lm)
 You have two sets of outputs here, one a table and the other a plot, but they both show the same information. First the table:
 
 * The column headed `diff` shows the difference in the mean crop yield for each comparison of soil types
-* The columns headed `lwr` and `upr` give the lower and upper 95% confidence intervals of this difference. See [Confidence Intervals](https://naturalandenvironmentalscience.shinyapps.io/variation/#section-confidence-intervals) on the Canvas website if you need a refresher
+* The columns headed `lwr` and `upr` give the lower and upper 95% confidence intervals of this difference. See
+<a href="https://naturalandenvironmentalscience.shinyapps.io/variation/#section-confidence-intervals" target="_blank">Confidence intervals</a>
+ on the Canvas website if you need a refresher
 * The column headed `p adj` gives the adjusted p-value for this mean, such that:
     + if p is less than 0.05 then we assume that the difference between the two soil types being compared is statistically significant
     + it is an "adjusted" p-value to automatically correct for the multiple tests (3 in this example) that are being done.
@@ -536,7 +576,7 @@ The plot of the Tukey HSD test shows the same information as the earlier table, 
 It is essential to explain these in your written work, both in the **Methods** and **Results** sections. In the Methods explain that you've used Tukey HSD to undertake pairwise comparison tests between different levels of your factor (here, the different soil types). In your Results, give both the p-values, and magnitude of the differences for each pairwise comparison. You can report this in a table, but remember to cross-reference to your Table Number in your text.
 
 ## Check the assumptions of your linear model
-Just as you did with the earlier example for the caterpillar growth and the continuous explanatory variable, so you should check model assumptions by examining the residuals (unexplained noise) from your expectations. Try and produce a quantile-quantile (QQ) plot similar to below for the soil linear model. The closer the residuals are to a straight line the more the assumption about normally distributed (bell-shaped) errors is accepted:
+Just as you did with the earlier example for the caterpillar growth and the continuous explanatory variable, so you should check model assumptions by examining the residuals (unexplained noise) from your expectations. Try and produce a quantile-quantile (QQ) plot similar to below for the soil linear model. The closer the residuals are to a straight line the more the assumption about normally distributed (bell-shaped) errors is accepted. **Hint:** To only display the QQ plot of your observed and predicted residuals, include `which = 2` instead of `which = c(1 ,2)` in your `plot()` of the `soil_lm` object:
 
 ```{r, echo=FALSE}
 ## 4.6 Check model assumptions ####
@@ -571,22 +611,24 @@ We can see that the spread of data points is relatively similar across each of t
 
 ```{r}
 gf_boxplot(soil_resid ~ crop_growth$soil) %>%
-  gf_jitter(soil_resid ~ crop_growth$soil, colour = ~crop_growth$soil) %>% 
-  gf_labs(x = "Soil type", y = "Model residuals", colour = "Soil type") %>% 
+  gf_jitter(soil_resid ~ crop_growth$soil) %>% 
+  gf_labs(x = "Soil type", y = "Model residuals") %>% 
   gf_theme(theme_classic())
 ```
 
 
-# Working with large biological datasets (Optional - in your own time)
-Modern biology and zoology generates big datasets that at first glance can be challenging to understand. Luckily, you can use the skills you've just learnt to summarise, visualise and analyse them. We will now do this with a dataset of over 300 observations!
+# Working with large biological datasets (Complete in your own time before next week)
+Modern biology, zoology and marine bioscience generates big datasets that at first glance can be challenging to understand. Luckily, you can use the skills you've just learnt to summarise, visualise and analyse them. We will now do this with a dataset of over 300 observations!
 
-The data are morphological measures of three species of Antartica penguins, although we will initially focus on their body mass. Key things for you to answer:
+The data are morphological measures of three species of Antartic penguins, although we will initially focus on their body mass. Key things for you to answer:
 
 * What are typical body mass means for each species?
 * Is body mass explained by the species of penguin?
 * Are there differences in body mass between each pairwise comparison of species?
 
-Download the `penguins.csv` data set from Canvas and copy it to your `NES2504` or `NES2504/Data` folder. If you want, open it in Microsoft Excel to see what it contains. If you have not already done so, please look at [Interactive website on how to visualise data](https://naturalandenvironmentalscience.shinyapps.io/Summary_vis/) which uses this dataset as an example.
+Download the `penguins.csv` data set from Canvas and copy it to your `NES2504` or `NES2504/Data` folder. If you want, open it in Microsoft Excel to see what it contains. If you have not already done so, you may find it helpful look at
+<a href="https://naturalandenvironmentalscience.shinyapps.io/Summary_vis/" target="_blank">Interactive website on how to visualise data</a>
+ which uses this dataset as an example.
 
 Read in the dataset in the usual way via the `read.csv()` function, storing it in a table (data frame) called `penguins`.
 
@@ -642,4 +684,5 @@ plot(TukeyHSD(penguin_lm))
 ```
 
 ## Interpretation
-How might you write up these results in a report? Compare your ANOVA and Tukey results to your boxplot. Also look at the NES2504 Course Handbook and its last section on report-writing.
+How might you write up these results in a report? Compare your ANOVA and Tukey results to your boxplot. Also look at this section of the 
+<a href="https://rasanderson.github.io/NES2504-AnalysisHandbook/reports.html" target="_blank">NES2504 Data Analysis Handbook</a> on easy approaches to report-writing.
