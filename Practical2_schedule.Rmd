@@ -4,7 +4,11 @@ author: "Roy Sanderson"
 output:
   html_document:
     df_print: paged
+    toc: true
+    toc-depth: 1
     number_sections: yes
+    html-math-method: mathml
+    css: custom.scss
   pdf_document: default
   word_document:
     number_sections: yes
