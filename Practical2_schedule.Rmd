@@ -1,17 +1,24 @@
 ---
-title: 'Practical 2: Getting started with Linear models'
-author: "Roy Sanderson"
-output:
-  html_document:
+title: 'Practical 2: Getting started with linear models'
+author: "Roy Sanderson, Will Reid"
+format:
+  html:
     df_print: paged
+    number-sections: true
     toc: true
     toc-depth: 1
-    number_sections: yes
+    embed-resources: true
     html-math-method: mathml
     css: custom.scss
-  pdf_document: default
-  word_document:
-    number_sections: yes
+  docx:
+    toc: true
+    toc-depth: 1
+    number-sections: true
+    reference_docx: template.docx
+format-links: false
+editor_options:
+  markdown:
+    wrap: sentence
 ---
 
 ```{r setup, include=FALSE}
@@ -46,7 +53,7 @@ library(car)
 ```
 
 # Introduction
-In this practical you will be introduced to **linear models** which provide a way to assess the relationships between a **response** variable and one or more **explanatory** variable(s). You will recall that we are trying to use a "goal-oriented" approach where possible in NES2303:
+In this practical you will be introduced to **linear models** which provide a way to assess the relationships between a **response** variable and one or more **explanatory** variable(s). You will recall that we are trying to use a "goal-oriented" approach where possible in NES2504:
 
 &nbsp;
 
@@ -98,18 +105,18 @@ All linear models have a continuous response variable. By "continuous" the respo
 Linear models with continuous explanatory variables are often called "regression analyses". If you have two or more continuous explanatory variables you may see them called "multiple regression".
 
 ## Before you begin
-We will start by looking at the `caterpillars` data set that we were using in the interactive website for linear models with continuous explanatory variables. The `caterpillars.csv` data file is available on Canvas and should be downloaded. Remember that this will end up in your "Downloads" folder: you will need to move it from Downloads into your NES2303 folder before you can read it into R. After you have downloaded the file:
+We will start by looking at the `caterpillars` data set that we were using in the interactive website for linear models with continuous explanatory variables. The `caterpillars.csv` data file is available on Canvas and should be downloaded. Remember that this will end up in your "Downloads" folder: you will need to move it from Downloads into your NES2504 folder before you can read it into R. After you have downloaded the file:
 
 1. Download the `caterpillars.csv` from Canvas; you can open the file in Microsoft Excel to have a quick look at it, but ignore any requests to save it in Excel format.
-2. Use File Explorer to copy `caterpillars.csv` from your Downloads folder to your NES2303 folder
-3. Start RStudio. Select **File -> Open project...** and navigate to the RStudio project you created in the first practical session. This should be a file called NES2303; open it and check that `NES2303` is showing in the top right corner of the RStudio window.
+2. Use File Explorer to copy `caterpillars.csv` from your Downloads folder to your NES2504 folder
+3. Start RStudio. Select **File -> Open project...** and navigate to the RStudio project you created in the first practical session. This should be a file called NES2504; open it and check that `NES2504` is showing in the top right corner of the RStudio window.
 
 
 ## Create a new R script and import the data
 You now want to import the data, and check the first few rows to ensure it's been read into RStudio correctly, and has the right number of rows and columns. In the example below note the use of comments, preceded by `#` symbols, and the use of blank lines. Four comments `####` auto-creates a table of contents (ToC) for your script (**ask a demonstrator if unsure how to open the ToC**),
 
 1. In RStudio select **File -> New File -> R Script**. It is good practice to save your script immediately by going to **File -> Save** and give it a sensible name, e.g. `Practical2.R`.
-2. Now start writing the contents of your script, with a title line, explanation of what your script is doing, etc. **Note**: some of you are storing all your CSV files in a `Data` subfolder, others are storing them in the main `NES2303` folder. It does not matter which one you choose, but adjust the `read.csv()` call below accordingly:
+2. Now start writing the contents of your script, with a title line, explanation of what your script is doing, etc. **Note**: some of you are storing all your CSV files in a `Data` subfolder, others are storing them in the main `NES2504` folder. It does not matter which one you choose, but adjust the `read.csv()` call below accordingly:
 
 
 ```{r}
@@ -131,7 +138,7 @@ library(car)
 caterpillar_dat <- read.csv("Data/caterpillars.csv")
 ```
 
-If RGui or RStudio does not find the file `caterpillars.csv` check that you correctly copied the CSV from Downloads to NES2303, that there are no spelling errors, or whether you need to omit the `Data/` if you are not using a subfolder called `Data` within the `NES2303` folder.
+If RGui or RStudio does not find the file `caterpillars.csv` check that you correctly copied the CSV from Downloads to NES2504, that there are no spelling errors, or whether you need to omit the `Data/` if you are not using a subfolder called `Data` within the `NES2504` folder.
 
 Using the functions that you learned in the first practical familiarise yourself with the `caterpillars` data. 
 
@@ -303,7 +310,7 @@ Is the value that you obtained from your `predictor` function the same as when y
 
 ## Checking the assumptions of the linear model
 ### Revision: what are linear model residuals and why do they matter?
-All models are simplifications of reality, and thus make various assumptions about your data. You will remember from the online interactive website tutorials [Checking model assumptions](https://naturalandenvironmentalscience.shinyapps.io/NES2303_regression/#section-checking-model-assumptions) that one of the key assumptions of linear models is that the residuals are from a normal distribution. Residuals are the "noise" in your data. In a 'perfect' set of data all your observations would fall exactly on the fitted line. But look at the graph with your fitted line: only one observation (tannin concentration 7.0) lies very close to the fitted line. The others are all slightly above or below the line. A normal distribution is a bell-shaped curve, so if the model is a good one, if you create a frequency histogram of the residuals you should see (roughly) that sort of curve. **Note**: "residuals" are sometimes referred to as "errors" and represented by the Greek letter Epsilon ($\epsilon$).
+All models are simplifications of reality, and thus make various assumptions about your data. You will remember from the online interactive website tutorials [Checking model assumptions](https://naturalandenvironmentalscience.shinyapps.io/NES2504_regression/#section-checking-model-assumptions) that one of the key assumptions of linear models is that the residuals are from a normal distribution. Residuals are the "noise" in your data. In a 'perfect' set of data all your observations would fall exactly on the fitted line. But look at the graph with your fitted line: only one observation (tannin concentration 7.0) lies very close to the fitted line. The others are all slightly above or below the line. A normal distribution is a bell-shaped curve, so if the model is a good one, if you create a frequency histogram of the residuals you should see (roughly) that sort of curve. **Note**: "residuals" are sometimes referred to as "errors" and represented by the Greek letter Epsilon ($\epsilon$).
 
 **Key point**: The residuals above and below the line should average around zero, and their frequency histogram produce a rough bell-shaped curve.
 
@@ -338,7 +345,7 @@ Imagine you had done this caterpillar experiment as part of your final-year rese
 When your linear model has categorical explanatory variables it is often called "Analysis of Variance" or ANOVA. If you have only one categorical explanatory, it might be called "One-Way ANOVA", with two categorical explanatory variables "Two-Way ANOVA" etc. Today you just have one explanatory.
 
 ## Download and check the data
-Download `crop_growth.csv` from Canvas and open it in Excel to have a quick look at its contents (don't edit it - ignore any requests to save it in Excel format). Remember that you have to use File Explorer to copy it from your Downloads folder to your NES2303 folder. Depending on whether you are saving your CSV files in a `Data` subfolder, or keep them in your NES2303 folder, adjust the following code. This imports the data, and allows you to look at its structure. Remember to **add comment lines** as shown below to help you when you look at your script when revising for your assessment in January. Execute each line sequentially as usual by hitting the <kbd>Ctrl</kbd>+<kbd>Enter</kbd> key combination. This may be shown as <kbd>Ctrl</kbd>+<kbd>  &#8629;  </kbd> on some keyboards:
+Download `crop_growth.csv` from Canvas and open it in Excel to have a quick look at its contents (don't edit it - ignore any requests to save it in Excel format). Remember that you have to use File Explorer to copy it from your Downloads folder to your NES2504 folder. Depending on whether you are saving your CSV files in a `Data` subfolder, or keep them in your NES2504 folder, adjust the following code. This imports the data, and allows you to look at its structure. Remember to **add comment lines** as shown below to help you when you look at your script when revising for your assessment in January. Execute each line sequentially as usual by hitting the <kbd>Ctrl</kbd>+<kbd>Enter</kbd> key combination. This may be shown as <kbd>Ctrl</kbd>+<kbd>  &#8629;  </kbd> on some keyboards:
 
 ```{r, eval=FALSE}
 # 4 Linear models with categorical explanatory variables ####
@@ -579,7 +586,7 @@ The data are morphological measures of three species of Antartica penguins, alth
 * Is body mass explained by the species of penguin?
 * Are there differences in body mass between each pairwise comparison of species?
 
-Download the `penguins.csv` data set from Canvas and copy it to your `NES2303` or `NES2303/Data` folder. If you want, open it in Microsoft Excel to see what it contains. If you have not already done so, please look at [Interactive website on how to visualise data](https://naturalandenvironmentalscience.shinyapps.io/Summary_vis/) which uses this dataset as an example.
+Download the `penguins.csv` data set from Canvas and copy it to your `NES2504` or `NES2504/Data` folder. If you want, open it in Microsoft Excel to see what it contains. If you have not already done so, please look at [Interactive website on how to visualise data](https://naturalandenvironmentalscience.shinyapps.io/Summary_vis/) which uses this dataset as an example.
 
 Read in the dataset in the usual way via the `read.csv()` function, storing it in a table (data frame) called `penguins`.
 
@@ -635,4 +642,4 @@ plot(TukeyHSD(penguin_lm))
 ```
 
 ## Interpretation
-How might you write up these results in a report? Compare your ANOVA and Tukey results to your boxplot. Also look at the NES2303 Course Handbook and its last section on report-writing.
+How might you write up these results in a report? Compare your ANOVA and Tukey results to your boxplot. Also look at the NES2504 Course Handbook and its last section on report-writing.
